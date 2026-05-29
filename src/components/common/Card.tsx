@@ -8,17 +8,12 @@ interface CardProps {
 }
 
 export const Card = ({ children, style }: CardProps) => {
-  const activeColors = {
-    card: colors.surface,
-    border: colors.surfaceHighlight,
-  };
-
   return (
     <View style={[
       styles.card, 
       { 
-        backgroundColor: activeColors.card,
-        borderColor: activeColors.border,
+        backgroundColor: colors.surface,
+        borderColor: 'rgba(137, 180, 250, 0.08)',
       }, 
       style
     ]}>
@@ -30,12 +25,12 @@ export const Card = ({ children, style }: CardProps) => {
 const styles = StyleSheet.create({
   card: {
     borderRadius: 16,
-    borderWidth: 1,
-    padding: 16,
+    borderWidth: 1.5,
+    padding: 18,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.05,
-    shadowRadius: 12,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 4,
   },
 });

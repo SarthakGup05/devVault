@@ -1,6 +1,7 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet, ActivityIndicator, ViewStyle } from 'react-native';
+import { TouchableWithoutFeedback, Animated, Text, StyleSheet, ActivityIndicator, ViewStyle } from 'react-native';
 import { colors } from '../../theme';
+import * as Haptics from 'expo-haptics';
 
 interface ButtonProps {
   title: string;
@@ -18,6 +19,34 @@ export const Button = ({ title, onPress, variant = 'primary', loading, disabled,
     error: colors.danger,
   };
 
+  const scaleAnim = React.useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = () => {
+    if (disabled || loading) return;
+    Animated.spring(scaleAnim, {
+      toValue: 0.96,
+      useNativeDriver: true,
+      friction: 8,
+      tension: 150,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    if (disabled || loading) return;
+    Animated.spring(scaleAnim, {
+      toValue: 1.0,
+      useNativeDriver: true,
+      friction: 8,
+      tension: 150,
+    }).start();
+  };
+
+  const handlePress = () => {
+    if (disabled || loading) return;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onPress();
+  };
+
   const getStyles = () => {
     if (variant === 'danger') return [styles.button, { backgroundColor: activeColors.error }, style];
     if (variant === 'secondary') return [styles.button, { backgroundColor: activeColors.primaryLight, borderWidth: 1, borderColor: activeColors.primary }, style];
@@ -30,18 +59,24 @@ export const Button = ({ title, onPress, variant = 'primary', loading, disabled,
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.8}
-      onPress={onPress}
+    <TouchableWithoutFeedback
+      onPressIn={handlePressIn}
+      onPressOut={handlePressOut}
+      onPress={handlePress}
       disabled={disabled || loading}
-      style={[getStyles(), (disabled || loading) && styles.disabled]}
     >
-      {loading ? (
-        <ActivityIndicator size="small" color={getTextColor()} />
-      ) : (
-        <Text style={[styles.text, { color: getTextColor() }]}>{title}</Text>
-      )}
-    </TouchableOpacity>
+      <Animated.View style={[
+        getStyles(),
+        (disabled || loading) && styles.disabled,
+        { transform: [{ scale: scaleAnim }] }
+      ]}>
+        {loading ? (
+          <ActivityIndicator size="small" color={getTextColor()} />
+        ) : (
+          <Text style={[styles.text, { color: getTextColor() }]}>{title}</Text>
+        )}
+      </Animated.View>
+    </TouchableWithoutFeedback>
   );
 };
 
