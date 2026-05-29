@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { Snippet, PopulatedSnippet } from '../types';
-import { getAllSnippets, getSnippetById, createSnippet, deleteSnippet } from '../database/queries/snippets';
+import { getAllSnippets, getSnippetById, createSnippet, deleteSnippet, updateSnippet } from '../database/queries/snippets';
 
 export const useSnippets = () => {
   const [snippets, setSnippets] = useState<Snippet[]>([]);
@@ -61,5 +61,23 @@ export const useSnippets = () => {
     }
   }, [fetchSnippets]);
 
-  return { snippets, loading, error, fetchSnippets, getSnippetById: getSnippet, addSnippet, removeSnippet };
+  const toggleFavoriteSnippet = useCallback((id: string) => {
+    try {
+      const found = getSnippet(id);
+      if (found) {
+        const updated = {
+          ...found,
+          isFavorite: !found.isFavorite,
+          updatedAt: new Date().toISOString()
+        };
+        updateSnippet(updated);
+        fetchSnippets();
+      }
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }, [fetchSnippets, getSnippet]);
+
+  return { snippets, loading, error, fetchSnippets, getSnippetById: getSnippet, addSnippet, removeSnippet, toggleFavoriteSnippet };
 };

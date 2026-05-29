@@ -5,7 +5,7 @@ import { createTablesQuery } from './schema.sql';
 // Open or create the database file
 export const db = SQLite.openDatabaseSync('devvault.db');
 
-export const initializeDatabase = () => {
+export const initializeDatabase = async () => {
   try {
     // Run the schema creation
     db.execSync(createTablesQuery);

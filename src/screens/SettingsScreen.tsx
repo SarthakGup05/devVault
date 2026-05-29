@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { colors } from '../theme';
 import { ApiKeyInput } from '../components/settings/ApiKeyInput';
 import { StorageMetrics } from '../components/settings/StorageMetrics';
+import { BackgroundGraphics } from '../components/common/BackgroundGraphics';
+
 
 export const SettingsScreen = () => {
   const activeColors = {
@@ -11,15 +13,18 @@ export const SettingsScreen = () => {
   };
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: activeColors.background }]}>
-      <Text style={[styles.title, { color: activeColors.text }]}>Settings</Text>
+    <View style={{ flex: 1, backgroundColor: activeColors.background }}>
+      <BackgroundGraphics />
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <Text style={[styles.title, { color: activeColors.text }]}>Settings</Text>
       <View style={styles.section}>
         <ApiKeyInput />
       </View>
       <View style={styles.section}>
         <StorageMetrics />
       </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
