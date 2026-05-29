@@ -1,24 +1,19 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import React from 'react';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import { DatabaseProvider } from '../src/context/DatabaseContext';
+import { SettingsProvider } from '../src/context/SettingsContext';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <SettingsProvider>
+      <DatabaseProvider>
+        <Stack screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="snippet/[id]" options={{ headerShown: true, title: 'Snippet Details' }} />
+          <Stack.Screen name="snippet/edit" options={{ headerShown: true, title: 'New Snippet', presentation: 'modal' }} />
+          <Stack.Screen name="explanation" options={{ headerShown: true, title: 'AI Assistant', presentation: 'modal' }} />
+        </Stack>
+      </DatabaseProvider>
+    </SettingsProvider>
   );
-}
+}\n
