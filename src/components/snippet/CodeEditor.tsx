@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, Text } from 'react-native';
 import { useSettings } from '../../context/SettingsContext';
+import { colors } from '../../theme';
 
 interface CodeEditorProps {
   value: string;
@@ -9,10 +10,10 @@ interface CodeEditorProps {
 }
 
 export const CodeEditor = ({ value, onChangeText, language }: CodeEditorProps) => {
-  const { isDark, editorFontSize } = useSettings();
+  const { editorFontSize } = useSettings();
 
   return (
-    <View style={[styles.container, { backgroundColor: isDark ? '#0D1117' : '#F6F8FA' }]}>
+    <View style={[styles.container, { backgroundColor: colors.codeBackground }]}>
       <View style={styles.header}>
         <Text style={styles.langTag}>{language.toUpperCase()}</Text>
       </View>
@@ -27,12 +28,12 @@ export const CodeEditor = ({ value, onChangeText, language }: CodeEditorProps) =
         style={[
           styles.input,
           {
-            color: isDark ? '#C9D1D9' : '#24292E',
+            color: colors.text,
             fontSize: editorFontSize,
           },
         ]}
         placeholder="Paste or write your code here..."
-        placeholderTextColor="#888"
+        placeholderTextColor={colors.subtext}
       />
     </View>
   );
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 36,
-    backgroundColor: 'rgba(0,0,0,0.05)',
+    backgroundColor: 'rgba(0,0,0,0.15)',
     justifyContent: 'center',
     paddingHorizontal: 16,
   },
@@ -62,4 +63,4 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
     textAlignVertical: 'top',
   },
-});\n
+});

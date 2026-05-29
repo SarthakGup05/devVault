@@ -29,4 +29,4 @@ export const detectLanguage = (code: string): string => {
   }
   
   return 'markdown';
-};\n
+};

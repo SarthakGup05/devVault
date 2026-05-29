@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSnippets } from '../hooks/useSnippets';
-import { useSettings } from '../context/SettingsContext';
 import { colors } from '../theme';
 import { CodeViewer } from '../components/snippet/CodeViewer';
 import { Button } from '../components/common/Button';
@@ -11,13 +10,22 @@ export const SnippetDetailScreen = () => {
   const { id } = useLocalSearchParams();
   const { getSnippetById, removeSnippet } = useSnippets();
   const [snippet, setSnippet] = useState<any>(null);
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
   const router = useRouter();
+
+  const activeColors = {
+    background: colors.base,
+    card: colors.surface,
+    border: colors.surfaceHighlight,
+    primary: colors.primary,
+    text: colors.text,
+    textSecondary: colors.subtext,
+    error: colors.danger,
+  };
 
   useEffect(() => {
     if (id) {
-      getSnippetById(Number(id)).then(setSnippet);
+      const found = getSnippetById(String(id));
+      setSnippet(found);
     }
   }, [id, getSnippetById]);
 
@@ -29,16 +37,15 @@ export const SnippetDetailScreen = () => {
     );
   }
 
-  const handleDelete = async () => {
-    await removeSnippet(snippet.id);
+  const handleDelete = () => {
+    removeSnippet(snippet.id);
     router.back();
   };
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: activeColors.background }]}>
       <Text style={[styles.title, { color: activeColors.text }]}>{snippet.title}</Text>
-      <Text style={[styles.desc, { color: activeColors.textSecondary }]}>{snippet.description || 'No description provided.'}</Text>
-      <CodeViewer code={snippet.code} language={snippet.language} />
+      <CodeViewer code={snippet.content} language={snippet.language} />
       <View style={styles.actions}>
         <Button title="AI Code Review" onPress={() => router.push({ pathname: '/explanation', params: { snippetId: snippet.id } })} style={styles.btn} />
         <Button title="Delete" onPress={handleDelete} variant="danger" style={styles.btn} />
@@ -56,10 +63,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: '700',
-    marginBottom: 8,
-  },
-  desc: {
-    fontSize: 16,
     marginBottom: 20,
   },
   actions: {
@@ -71,4 +74,4 @@ const styles = StyleSheet.create({
   btn: {
     flex: 1,
   },
-});\n
+});

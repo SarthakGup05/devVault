@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#090D16',
   },
-});\n
+});

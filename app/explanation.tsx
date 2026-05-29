@@ -3,30 +3,31 @@ import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from 'react-nat
 import { useLocalSearchParams } from 'expo-router';
 import { useAI } from '../src/hooks/useAI';
 import { useSnippets } from '../src/hooks/useSnippets';
-import { useSettings } from '../src/context/SettingsContext';
 import { colors } from '../src/theme';
 
 export default function ExplanationRoute() {
   const { snippetId } = useLocalSearchParams();
   const { getSnippetById } = useSnippets();
   const { explainCode, loading, error } = useAI();
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  
+  const activeColors = {
+    background: colors.base,
+    primary: colors.primary,
+    text: colors.text,
+    textSecondary: colors.subtext,
+    error: colors.danger,
+  };
 
-  const [aiText, setAiText] = useState(null);
+  const [aiText, setAiText] = useState<string | null>(null);
 
   useEffect(() => {
     if (snippetId) {
-      getSnippetById(Number(snippetId)).then(async (snip) => {
-        if (snip) {
-          try {
-            const exp = await explainCode(snip.code, snip.language);
-            setAiText(exp);
-          } catch (err) {
-            console.error(err);
-          }
-        }
-      });
+      const snip = getSnippetById(String(snippetId));
+      if (snip) {
+        explainCode(snip.content, snip.language)
+          .then(setAiText)
+          .catch(console.error);
+      }
     }
   }, [snippetId, getSnippetById, explainCode]);
 
@@ -69,4 +70,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 24,
   },
-});\n
+});

@@ -1,7 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, ActivityIndicator, ViewStyle } from 'react-native';
 import { colors } from '../../theme';
-import { useSettings } from '../../context/SettingsContext';
 
 interface ButtonProps {
   title: string;
@@ -13,8 +12,11 @@ interface ButtonProps {
 }
 
 export const Button = ({ title, onPress, variant = 'primary', loading, disabled, style }: ButtonProps) => {
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  const activeColors = {
+    primary: colors.primary,
+    primaryLight: colors.surface,
+    error: colors.danger,
+  };
 
   const getStyles = () => {
     if (variant === 'danger') return [styles.button, { backgroundColor: activeColors.error }, style];
@@ -59,4 +61,4 @@ const styles = StyleSheet.create({
   disabled: {
     opacity: 0.6,
   },
-});\n
+});

@@ -6,4 +6,4 @@ export const shareLocalFile = async (fileUri: string, dialogTitle: string): Prom
     throw new Error('Native sharing is not available on this device');
   }
   await Sharing.shareAsync(fileUri, { dialogTitle });
-};\n
+};

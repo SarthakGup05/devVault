@@ -1,4 +1,4 @@
 import { colors } from './colors';
 import { typography } from './typography';
 
-export { colors, typography };\n
+export { colors, typography };

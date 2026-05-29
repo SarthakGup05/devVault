@@ -3,4 +3,4 @@ import { HomeScreen } from '../../src/screens/HomeScreen';
 
 export default function TabHome() {
   return <HomeScreen />;
-}\n
+}

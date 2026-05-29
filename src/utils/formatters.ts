@@ -23,4 +23,4 @@ export const formatRelativeTime = (dateString: string): string => {
   if (diffDays < 7) return diffDays + 'd ago';
   
   return date.toLocaleDateString();
-};\n
+};

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, TextInput, Text, StyleSheet, TextInputProps } from 'react-native';
 import { colors } from '../../theme';
-import { useSettings } from '../../context/SettingsContext';
 
 interface InputProps extends TextInputProps {
   label?: string;
@@ -9,8 +8,12 @@ interface InputProps extends TextInputProps {
 }
 
 export const Input = ({ label, error, style, ...props }: InputProps) => {
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  const activeColors = {
+    text: colors.text,
+    textSecondary: colors.subtext,
+    border: colors.surfaceHighlight,
+    error: colors.danger,
+  };
 
   return (
     <View style={styles.container}>
@@ -20,7 +23,7 @@ export const Input = ({ label, error, style, ...props }: InputProps) => {
         style={[
           styles.input,
           {
-            backgroundColor: isDark ? '#0F1626' : '#F3F4F6',
+            backgroundColor: colors.surface,
             borderColor: error ? activeColors.error : activeColors.border,
             color: activeColors.text,
           },
@@ -54,4 +57,4 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 4,
   },
-});\n
+});

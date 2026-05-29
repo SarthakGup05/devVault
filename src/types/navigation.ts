@@ -3,4 +3,4 @@ export type RootStackParamList = {
   'snippet/[id]': { id: string };
   'snippet/edit': { id?: string };
   'explanation': { snippetId: string };
-};\n
+};

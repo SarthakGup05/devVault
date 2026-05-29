@@ -1,56 +1,65 @@
 import { useState, useCallback } from 'react';
-import { useSQLiteContext } from 'expo-sqlite';
-import { DbSnippet, RichSnippet } from '../types';
-import { getAllSnippetsQuery, getSnippetByIdQuery, createSnippetQuery, deleteSnippetQuery } from '../database/queries/snippets';
+import { Snippet, PopulatedSnippet } from '../types';
+import { getAllSnippets, getSnippetById, createSnippet, deleteSnippet } from '../database/queries/snippets';
 
 export const useSnippets = () => {
-  const db = useSQLiteContext();
-  const [snippets, setSnippets] = useState<DbSnippet[]>([]);
+  const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchSnippets = useCallback(async () => {
+  const fetchSnippets = useCallback(() => {
     setLoading(true);
     setError(null);
     try {
-      const data = await getAllSnippetsQuery(db);
+      const data = getAllSnippets();
       setSnippets(data);
-    } catch (err) {
+    } catch (err: any) {
       setError(err.message || 'Failed to fetch snippets');
     } finally {
       setLoading(false);
     }
-  }, [db]);
+  }, []);
 
-  const getSnippetById = useCallback(async (id: number): Promise<RichSnippet | null> => {
+  const getSnippet = useCallback((id: string): PopulatedSnippet | null => {
     try {
-      return await getSnippetByIdQuery(db, id);
+      return getSnippetById(id);
     } catch (err) {
       console.error(err);
       return null;
     }
-  }, [db]);
+  }, []);
 
-  const addSnippet = useCallback(async (title: string, code: string, desc: string | null, lang: string) => {
+  const addSnippet = useCallback((title: string, content: string, language: string) => {
     try {
-      const id = await createSnippetQuery(db, title, code, desc, lang);
-      await fetchSnippets();
+      const id = Math.random().toString(36).substring(2, 9);
+      const now = new Date().toISOString();
+      const newSnippet: Snippet = {
+        id,
+        title,
+        content,
+        language,
+        isFavorite: false,
+        createdAt: now,
+        updatedAt: now,
+      };
+      createSnippet(newSnippet);
+      fetchSnippets();
       return id;
     } catch (err) {
       console.error(err);
       throw err;
     }
-  }, [db, fetchSnippets]);
+  }, [fetchSnippets]);
 
-  const removeSnippet = useCallback(async (id: number) => {
+  const removeSnippet = useCallback((id: string) => {
     try {
-      await deleteSnippetQuery(db, id);
-      await fetchSnippets();
+      deleteSnippet(id);
+      fetchSnippets();
     } catch (err) {
       console.error(err);
       throw err;
     }
-  }, [db, fetchSnippets]);
+  }, [fetchSnippets]);
 
-  return { snippets, loading, error, fetchSnippets, getSnippetById, addSnippet, removeSnippet };
-};\n
+  return { snippets, loading, error, fetchSnippets, getSnippetById: getSnippet, addSnippet, removeSnippet };
+};

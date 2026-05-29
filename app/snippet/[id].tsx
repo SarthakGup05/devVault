@@ -3,4 +3,4 @@ import { SnippetDetailScreen } from '../../src/screens/SnippetDetailScreen';
 
 export default function SnippetRoute() {
   return <SnippetDetailScreen />;
-}\n
+}

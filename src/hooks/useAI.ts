@@ -27,4 +27,4 @@ export const useAI = () => {
   }, []);
 
   return { explainCode, explanation, loading, error, getAiApiKey, saveAiApiKey, deleteAiApiKey };
-};\n
+};

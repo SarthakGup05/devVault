@@ -1,16 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { useSettings } from '../../context/SettingsContext';
 import { colors } from '../../theme';
 
 interface AttachmentListProps {
-  attachments: Array<{ id: number; file_name: string; file_size: number }>;
-  onDelete?: (id: number) => void;
+  attachments: Array<{ id: string; fileUri: string; fileType: string }>;
+  onDelete?: (id: string) => void;
 }
 
 export const AttachmentList = ({ attachments, onDelete }: AttachmentListProps) => {
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  const activeColors = {
+    text: colors.text,
+    textSecondary: colors.subtext,
+    error: colors.danger,
+    card: colors.surface,
+  };
 
   if (attachments.length === 0) return null;
 
@@ -18,16 +21,19 @@ export const AttachmentList = ({ attachments, onDelete }: AttachmentListProps) =
     <View style={styles.container}>
       <Text style={[styles.label, { color: activeColors.textSecondary }]}>Attachments</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {attachments.map(att => (
-          <View key={att.id} style={[styles.card, { backgroundColor: isDark ? '#1F2937' : '#E5E7EB' }]}>
-            <Text numberOfLines={1} style={[styles.filename, { color: activeColors.text }]}>{att.file_name}</Text>
-            {onDelete && (
-              <TouchableOpacity onPress={() => onDelete(att.id)}>
-                <Text style={[styles.deleteText, { color: activeColors.error }]}>Delete</Text>
-              </TouchableOpacity>
-            )}
-          </View>
-        ))}
+        {attachments.map(att => {
+          const fileName = att.fileUri.split('/').pop() || 'file';
+          return (
+            <View key={att.id} style={[styles.card, { backgroundColor: activeColors.card }]}>
+              <Text numberOfLines={1} style={[styles.filename, { color: activeColors.text }]}>{fileName}</Text>
+              {onDelete && (
+                <TouchableOpacity onPress={() => onDelete(att.id)}>
+                  <Text style={[styles.deleteText, { color: activeColors.error }]}>Delete</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          );
+        })}
       </ScrollView>
     </View>
   );
@@ -59,4 +65,4 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontWeight: '600',
   },
-});\n
+});

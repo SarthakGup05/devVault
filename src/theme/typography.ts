@@ -20,4 +20,4 @@ export const typography = {
     normal: 1.5,
     relaxed: 1.7,
   }
-};\n
+};

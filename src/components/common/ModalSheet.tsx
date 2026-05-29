@@ -1,7 +1,6 @@
 import React from 'react';
 import { Modal, View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { colors } from '../../theme';
-import { useSettings } from '../../context/SettingsContext';
 
 interface ModalSheetProps {
   visible: boolean;
@@ -11,8 +10,11 @@ interface ModalSheetProps {
 }
 
 export const ModalSheet = ({ visible, onClose, title, children }: ModalSheetProps) => {
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  const activeColors = {
+    card: colors.surface,
+    text: colors.text,
+    primary: colors.primary,
+  };
 
   return (
     <Modal visible={visible} animationType="slide" transparent>
@@ -61,4 +63,4 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
   },
-});\n
+});

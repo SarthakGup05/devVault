@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 import { colors } from '../../theme';
-import { useSettings } from '../../context/SettingsContext';
 
 interface CardProps {
   children: React.ReactNode;
@@ -9,8 +8,10 @@ interface CardProps {
 }
 
 export const Card = ({ children, style }: CardProps) => {
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  const activeColors = {
+    card: colors.surface,
+    border: colors.surfaceHighlight,
+  };
 
   return (
     <View style={[
@@ -37,4 +38,4 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
     elevation: 2,
   },
-});\n
+});

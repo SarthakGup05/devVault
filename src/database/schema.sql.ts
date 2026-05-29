@@ -1,51 +1,36 @@
-export const CREATE_SNIPPETS_TABLE = `
+// src/database/schema.sql.ts
+
+export const createTablesQuery = `
+  PRAGMA foreign_keys = ON;
+
   CREATE TABLE IF NOT EXISTS snippets (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id TEXT PRIMARY KEY NOT NULL,
     title TEXT NOT NULL,
-    code TEXT NOT NULL,
-    description TEXT,
+    content TEXT NOT NULL,
     language TEXT NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    updated_at TEXT DEFAULT CURRENT_TIMESTAMP
+    is_favorite INTEGER DEFAULT 0,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
   );
-`;
 
-export const CREATE_TAGS_TABLE = `
   CREATE TABLE IF NOT EXISTS tags (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL UNIQUE
+    id TEXT PRIMARY KEY NOT NULL,
+    name TEXT UNIQUE NOT NULL
   );
-`;
 
-export const CREATE_SNIPPET_TAGS_TABLE = `
   CREATE TABLE IF NOT EXISTS snippet_tags (
-    snippet_id INTEGER,
-    tag_id INTEGER,
+    snippet_id TEXT NOT NULL,
+    tag_id TEXT NOT NULL,
     PRIMARY KEY (snippet_id, tag_id),
-    FOREIGN KEY (snippet_id) REFERENCES snippets(id) ON DELETE CASCADE,
-    FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE
+    FOREIGN KEY (snippet_id) REFERENCES snippets (id) ON DELETE CASCADE,
+    FOREIGN KEY (tag_id) REFERENCES tags (id) ON DELETE CASCADE
   );
-`;
 
-export const CREATE_ATTACHMENTS_TABLE = `
   CREATE TABLE IF NOT EXISTS attachments (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    snippet_id INTEGER,
-    file_name TEXT NOT NULL,
-    file_path TEXT NOT NULL,
-    mime_type TEXT NOT NULL,
-    file_size INTEGER NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (snippet_id) REFERENCES snippets(id) ON DELETE CASCADE
+    id TEXT PRIMARY KEY NOT NULL,
+    snippet_id TEXT NOT NULL,
+    file_uri TEXT NOT NULL,
+    file_type TEXT NOT NULL,
+    FOREIGN KEY (snippet_id) REFERENCES snippets (id) ON DELETE CASCADE
   );
 `;
-
-export const CREATE_EXPLANATIONS_TABLE = `
-  CREATE TABLE IF NOT EXISTS explanations (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    snippet_id INTEGER UNIQUE,
-    explanation TEXT NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (snippet_id) REFERENCES snippets(id) ON DELETE CASCADE
-  );
-`;\n

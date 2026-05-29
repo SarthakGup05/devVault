@@ -12,4 +12,4 @@ export const getAiApiKey = async (): Promise<string | null> => {
 
 export const deleteAiApiKey = async (): Promise<void> => {
   await SecureStore.deleteItemAsync(API_KEY_STORAGE_KEY);
-};\n
+};

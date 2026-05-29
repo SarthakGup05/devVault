@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { colors } from '../../theme';
-import { useSettings } from '../../context/SettingsContext';
 
 interface TagSelectorProps {
   selectedTags: string[];
@@ -10,8 +9,11 @@ interface TagSelectorProps {
 }
 
 export const TagSelector = ({ selectedTags, onAddTag, onRemoveTag }: TagSelectorProps) => {
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  const activeColors = {
+    primary: colors.primary,
+    primaryLight: colors.surface,
+    textSecondary: colors.subtext,
+  };
 
   return (
     <View style={styles.container}>
@@ -54,4 +56,4 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
   },
-});\n
+});

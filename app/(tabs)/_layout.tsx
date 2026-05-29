@@ -1,11 +1,14 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { useSettings } from '../../src/context/SettingsContext';
 import { colors } from '../../src/theme';
 
 export default function TabsLayout() {
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  const activeColors = {
+    card: colors.surface,
+    border: colors.surfaceHighlight,
+    primary: colors.primary,
+    textSecondary: colors.subtext,
+  };
 
   return (
     <Tabs
@@ -23,4 +26,4 @@ export default function TabsLayout() {
       <Tabs.Screen name="settings" options={{ title: 'Settings' }} />
     </Tabs>
   );
-}\n
+}

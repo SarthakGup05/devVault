@@ -1,3 +1,3 @@
 export * from './database';
 export * from './snippet';
-export * from './navigation';\n
+export * from './navigation';

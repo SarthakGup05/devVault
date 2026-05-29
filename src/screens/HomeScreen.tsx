@@ -1,16 +1,22 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { useSnippets } from '../hooks/useSnippets';
-import { useSettings } from '../context/SettingsContext';
 import { colors } from '../theme';
 import { useRouter } from 'expo-router';
 import { Card } from '../components/common/Card';
 
 export const HomeScreen = () => {
   const { snippets, fetchSnippets } = useSnippets();
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
   const router = useRouter();
+
+  const activeColors = {
+    background: colors.base,
+    card: colors.surface,
+    border: colors.surfaceHighlight,
+    primary: colors.primary,
+    text: colors.text,
+    textSecondary: colors.subtext,
+  };
 
   useEffect(() => {
     fetchSnippets();
@@ -26,7 +32,7 @@ export const HomeScreen = () => {
       </View>
       <FlatList
         data={snippets}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => router.push('/snippet/' + item.id)}>
             <Card style={styles.card}>
@@ -82,4 +88,4 @@ const styles = StyleSheet.create({
     padding: 40,
     alignItems: 'center',
   },
-});\n
+});

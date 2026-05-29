@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { useSettings } from '../context/SettingsContext';
 import { colors } from '../theme';
 import { ApiKeyInput } from '../components/settings/ApiKeyInput';
 import { StorageMetrics } from '../components/settings/StorageMetrics';
 
 export const SettingsScreen = () => {
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  const activeColors = {
+    background: colors.base,
+    text: colors.text,
+  };
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: activeColors.background }]}>
@@ -36,4 +37,4 @@ const styles = StyleSheet.create({
   section: {
     marginBottom: 24,
   },
-});\n
+});

@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card } from '../common/Card';
-import { useSettings } from '../../context/SettingsContext';
 import { colors } from '../../theme';
 
 export const StorageMetrics = () => {
-  const { isDark } = useSettings();
-  const activeColors = isDark ? colors.dark : colors.light;
+  const activeColors = {
+    text: colors.text,
+    textSecondary: colors.subtext,
+  };
 
   return (
     <Card>
@@ -37,4 +38,4 @@ const styles = StyleSheet.create({
   val: {
     fontWeight: '600',
   },
-});\n
+});

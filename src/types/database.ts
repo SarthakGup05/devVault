@@ -33,4 +33,4 @@ export interface DbExplanation {
   snippet_id: number;
   explanation: string;
   created_at: string;
-}\n
+}

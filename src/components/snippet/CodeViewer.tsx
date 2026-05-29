@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useSettings } from '../../context/SettingsContext';
+import { colors } from '../../theme';
 
 interface CodeViewerProps {
   code: string;
@@ -8,10 +9,10 @@ interface CodeViewerProps {
 }
 
 export const CodeViewer = ({ code, language }: CodeViewerProps) => {
-  const { isDark, editorFontSize } = useSettings();
+  const { editorFontSize } = useSettings();
 
   return (
-    <View style={[styles.container, { backgroundColor: isDark ? '#0D1117' : '#F6F8FA' }]}>
+    <View style={[styles.container, { backgroundColor: colors.codeBackground }]}>
       <View style={styles.header}>
         <Text style={styles.langTag}>{language.toUpperCase()}</Text>
       </View>
@@ -20,7 +21,7 @@ export const CodeViewer = ({ code, language }: CodeViewerProps) => {
           <Text style={[
             styles.codeText,
             {
-              color: isDark ? '#C9D1D9' : '#24292E',
+              color: colors.text,
               fontSize: editorFontSize,
             }
           ]}>
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 36,
-    backgroundColor: 'rgba(0,0,0,0.05)',
+    backgroundColor: 'rgba(0,0,0,0.15)',
     justifyContent: 'center',
     paddingHorizontal: 16,
   },
@@ -56,4 +57,4 @@ const styles = StyleSheet.create({
   codeText: {
     fontFamily: 'System',
   },
-});\n
+});

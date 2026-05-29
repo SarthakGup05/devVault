@@ -26,4 +26,4 @@ export const exportDataAsJson = async (data: any, fileName: string): Promise<str
     encoding: FileSystem.EncodingType.UTF8,
   });
   return fileUri;
-};\n
+};

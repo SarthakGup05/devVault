@@ -41,4 +41,4 @@ export const generateCodeExplanation = async (
     console.error('AI Service Error:', error);
     throw new Error(error.message || 'Failed to connect to AI provider');
   }
-};\n
+};
