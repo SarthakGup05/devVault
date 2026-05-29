@@ -1,10 +1,10 @@
 export const typography = {
   fonts: {
-    regular: 'System',
-    medium: 'System',
-    semibold: 'System',
-    bold: 'System',
-    monospace: 'System',
+    regular: 'Outfit_400Regular',
+    medium: 'Outfit_600SemiBold',
+    semibold: 'Outfit_600SemiBold',
+    bold: 'Outfit_700Bold',
+    monospace: 'FiraCode_400Regular',
   },
   sizes: {
     xs: 12,

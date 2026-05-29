@@ -1,4 +1,4 @@
-import * as FileSystem from 'expo-file-system';
+import * as FileSystem from 'expo-file-system/legacy';
 
 export const copyAttachmentToLocal = async (sourceUri: string, filename: string): Promise<string> => {
   const destDir = FileSystem.documentDirectory + 'attachments/';
@@ -23,7 +23,7 @@ export const deleteAttachmentFile = async (fileUri: string): Promise<void> => {
 export const exportDataAsJson = async (data: any, fileName: string): Promise<string> => {
   const fileUri = FileSystem.documentDirectory + fileName + '.json';
   await FileSystem.writeAsStringAsync(fileUri, JSON.stringify(data, null, 2), {
-    encoding: FileSystem.EncodingType.UTF8,
+    encoding: 'utf8',
   });
   return fileUri;
 };
