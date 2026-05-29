@@ -18,21 +18,38 @@ graph TD
     classDef error fill:#F38BA8,stroke:#E78284,stroke-width:1.5px,color:#1E1E2E,font-family:'Segoe UI',font-size:12px;
 
     %% Elements
-    User([User Interactive UI]) ::: highlight
-    TouchableScale[TouchableScale Spring Touch Engine] ::: accent
-    HomeScreen[HomeScreen Dashboard Ledger] ::: default
-    CodeEditor[CodeEditor Transparent Multi-Overlay] ::: default
-    Input[Input Focus Glow Control] ::: default
-    Notification[Spring-Animated Global Toast Notification] ::: accent
-    SQLite[(Offline SQLite Database Ledger)] ::: database
-    AIRouter{Flexible API Key Gateway Router} ::: default
-    Gemini[Gemini 2.5 Active Model] ::: default
-    OpenAI[OpenAI / GPT-4o-mini] ::: default
-    Claude[Claude 3.5 Haiku] ::: default
-    FetchRetry{Resilient fetchWithRetry Wrapper} ::: accent
-    Backoff[Exponential Backoff Wait - 1s, 2s, 4s] ::: accent
-    Success([Suggestion Ghost-Text Overlay]) ::: database
-    Fail([Elegantly Display Smooth Error Banner]) ::: error
+    User([User Interactive UI])
+    TouchableScale[TouchableScale Spring Touch Engine]
+    HomeScreen[HomeScreen Dashboard Ledger]
+    CodeEditor[CodeEditor Transparent Multi-Overlay]
+    Input[Input Focus Glow Control]
+    Notification[Spring-Animated Global Toast Notification]
+    SQLite[(Offline SQLite Database Ledger)]
+    AIRouter{Flexible API Key Gateway Router}
+    Gemini[Gemini 2.5 Active Model]
+    OpenAI[OpenAI / GPT-4o-mini]
+    Claude[Claude 3.5 Haiku]
+    FetchRetry{Resilient fetchWithRetry Wrapper}
+    Backoff[Exponential Backoff Wait - 1s, 2s, 4s]
+    Success([Suggestion Ghost-Text Overlay])
+    Fail([Elegantly Display Smooth Error Banner])
+
+    %% Class bindings
+    class User highlight;
+    class TouchableScale accent;
+    class HomeScreen default;
+    class CodeEditor default;
+    class Input default;
+    class Notification accent;
+    class SQLite database;
+    class AIRouter default;
+    class Gemini default;
+    class OpenAI default;
+    class Claude default;
+    class FetchRetry accent;
+    class Backoff accent;
+    class Success database;
+    class Fail error;
 
     %% Flow lines
     User -->|Tactile Press & Haptic Impact| TouchableScale
