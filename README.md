@@ -79,6 +79,64 @@ graph TD
 
 ---
 
+## 📂 Folder Structure
+
+Here is a visual map of the key directories and architectural components comprising DevVault:
+
+```text
+devVault/
+├── app/                      # Expo Router File-Based Entrypoints
+│   ├── (tabs)/               # Bottom Tab Navigator Layouts
+│   │   ├── _layout.tsx       # Custom Tab Pill Indicator Bar
+│   │   ├── index.tsx         # Tab Link to HomeScreen Ledger
+│   │   └── settings.tsx      # Tab Link to Settings Configurations
+│   ├── snippet/              # Snippet Detail & Editor Slates
+│   │   ├── [id].tsx          # Route to Detail Ledger Screen
+│   │   └── edit.tsx          # Route to Create/Modify Editor Screen
+│   ├── _layout.tsx           # Global Root Navigation Dark Theme Stack
+│   ├── explanation.tsx       # AI Review Assistant Modal Screen
+│   └── index.tsx             # App Entry Router Gateway
+├── src/                      # Core Source Code Directory
+│   ├── components/           # UI Component Catalog
+│   │   ├── common/           # Shared Generic Controls
+│   │   │   ├── TouchableScale.tsx     # Tactile Spring Scale Wrapper
+│   │   │   ├── Input.tsx              # Focus Glow Form Text Fields
+│   │   │   ├── Button.tsx             # Spring Tactile Actions
+│   │   │   ├── Card.tsx               # Surface Shell Panel
+│   │   │   ├── LanguageSelector.tsx   # Pill-style language selection deck
+│   │   │   └── AnimatedSplashScreen.tsx  # Dynamic splash introductions
+│   │   ├── settings/         # Settings UI Blocks
+│   │   │   ├── ApiKeyInput.tsx        # LLM Secret Keys Storer
+│   │   │   └── StorageMetrics.tsx     # Vault SQLite Optimizer
+│   │   └── snippet/          # Snippet UI Components
+│   │       ├── CodeEditor.tsx         # Breathing suggestion and overlays
+│   │       ├── CodeViewer.tsx         # Highlights read-only display
+│   │       └── AttachmentList.tsx     # Image attachments gallery
+│   ├── context/              # Context Providers
+│   │   ├── DatabaseContext.tsx        # SQLite connections provider
+│   │   ├── SettingsContext.tsx        # User settings storer
+│   │   └── NotificationContext.tsx    # Animated dynamic global toasts
+│   ├── database/             # SQLite Query Layer
+│   │   ├── client.ts         # SQLite Client initializations
+│   │   ├── schema.sql.ts     # Initial Schema and Tables definitions
+│   │   └── queries/          # CRUD Database queries
+│   ├── hooks/                # Custom React Hooks
+│   │   ├── useAI.ts          # AI Completion integrations
+│   │   ├── useSnippets.ts    # Snippet ledger actions
+│   │   └── useAttachments.ts # File attachment attachments manager
+│   ├── services/             # Background Logic Utilities
+│   │   ├── ai.ts             # Resilient self-healing HTTP retry router
+│   │   ├── secureStore.ts    # Secure encrypted keychain stores
+│   │   ├── fileSystem.ts     # File backup imports/exports
+│   │   └── sharing.ts        # Dynamic file sharing gateways
+│   ├── theme/                # Global Theme Assets
+│   │   ├── colors.ts         # Catppuccin Mocha colors palettes
+│   │   └── typography.ts     # Outfit & Fira Code font setups
+│   └── types/                # TypeScript Interfaces & Typing Declarations
+```
+
+---
+
 ## 🎨 Premium Visual Elements
 
 DevVault achieves a high-fidelity visual experience through tailored animations and custom interaction wrappers:
